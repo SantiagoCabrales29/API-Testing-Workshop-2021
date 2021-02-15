@@ -8,7 +8,7 @@ public class Booking {
 	private Object bookingdates;
 	private String additionalneeds;
 
-	public Booking(String firstname, String lastname, int totalprice, boolean depositpaid, Object bookingdates, String additionalneeds) {
+	public Booking(String firstname, String lastname, int totalprice, boolean depositpaid, BookingDates bookingdates, String additionalneeds) {
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.totalprice = totalprice;
