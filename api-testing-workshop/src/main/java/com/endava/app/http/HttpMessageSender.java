@@ -3,6 +3,8 @@ package com.endava.app.http;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
+import java.net.URL;
+
 import static io.restassured.RestAssured.given;
 
 public class HttpMessageSender {
@@ -24,4 +26,22 @@ public class HttpMessageSender {
 
 		return response;
 	}
+
+
+	//This goes after showing the first test
+
+
+	public Response postRequestToEndpoint(String msg, String endpoint) {
+		String requestURL = url + endpoint;
+		Response response =
+				given().
+						contentType(ContentType.JSON).
+						body(msg).log().all().
+						when().
+						post(requestURL).
+						andReturn();
+
+		return response;
+	}
+	//Continues in feature/5-Introduction-to-Abstractions
 }
