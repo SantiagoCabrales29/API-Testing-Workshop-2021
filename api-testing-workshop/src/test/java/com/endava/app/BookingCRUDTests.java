@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 
 import static org.hamcrest.Matchers.*;
@@ -26,6 +27,7 @@ public class BookingCRUDTests {
 	 */
 	private static Properties props;
 	private static HttpMessageSender requestSender;
+	private static RestfulBookerApi api;
 
 	@BeforeClass
 	public static void createTestEnvironment() {
@@ -37,6 +39,7 @@ public class BookingCRUDTests {
 		}
 		System.out.println(props.getProperty("url"));
 		requestSender = new HttpMessageSender(props.getProperty("url"));
+		api = new RestfulBookerApi(props.getProperty("url"));
 	}
 
 	@Test
@@ -50,24 +53,45 @@ public class BookingCRUDTests {
 	}
 
 	/*
-	Note that Rest Assured allow us to do some assertions of the fields.
-	This is useful, but if we are using JUnit, it is better to use that library to do the assertions and to use Rest
-	Assured only to send and receive HTTP requests!
-	*/
-	@Test
-	public void checkFirstNameTest(){
-		Response response =requestSender.getRequestToEndpoint("/booking/1");
+	 You were right we can separate more things.
+	 We can use different abstractions.
+	 An abstraction is a class that allow us to simulate the components or the behaviors of the SUT.
 
-		response.then().
-				assertThat().body("firstname", not(equalTo("Santiago"))).
-				body("totalprice",greaterThan(0));
-	}
-
-	/*
-	Do you see any advantages of using this approach?
+	 In this example we can create a class that will simulate all the functionalities a user can do with the
+	 Restful Booker API.
+	 Let's do that!
+	 Go to the RestfulBookerApi class
 	 */
 
+	//Note that for using this we have to create a new RestfulBookerApi object and instantiate it (we do it in the @BeforeClass
+	// but you can do it in the class)
+	@Test
+	public void getBookingIds(){
+		List<Integer> listBookingIds = api.getBookingIds();
+		boolean areItemsPositive = true;
+		Assert.assertTrue("The list of ids is empty",listBookingIds.size()>0);
+		for(Integer bookingId: listBookingIds){
+			if(bookingId <=0){
+				areItemsPositive=false;
+				break;
+			}
+		}
+		Assert.assertTrue("An id is negative",areItemsPositive);
+	}
 
-	//Exercise: Modify the Request Sender to also send post requests.
+	//The RestfulBookerAPI Class allow us to do an abstraction of all the requests we can send through the api.
 
+
+
+	//Exercise: Test HealthCheck Endpoint using the restful booker api class.
+
+
+
+	@Test
+	public void checkPing(){
+		Response response = api.doPing();
+		Assert.assertEquals(201, response.getStatusCode());
+	}
+
+	//Continues in feature/6-Serialization-and-Deserialization
 }
