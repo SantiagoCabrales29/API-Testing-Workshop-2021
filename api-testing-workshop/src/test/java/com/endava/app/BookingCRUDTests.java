@@ -112,4 +112,40 @@ public class BookingCRUDTests {
 		Assert.assertEquals("Names do not match", response.then().extract().path("firstname"), booking.getFirstname());
 		Assert.assertEquals("LastNames do not match", response.then().extract().path("lastname"), booking.getLastname());
 	}
+
+
+	//Exercice try to test delete booking
+
+
+
+	@Test
+	public void deleteBooking() {
+		String username = props.getProperty("username");
+		String password = props.getProperty("password");
+		Auth auth = new Auth(username,password);
+		String token = api.auth(auth);
+
+		List<Integer> bookingList = api.getBookingIds();
+
+		int random = (int) (Math.random() * (bookingList.size())+1);
+		System.out.println("This is the random number: " + random);
+
+		Response response = api.deleteBooking(token, bookingList.get(random));
+
+		Assert.assertEquals("",response.statusCode(), 201);
+
+		List<Integer> updatedList = api.getBookingIds();
+
+		Assert.assertFalse("", updatedList.contains(bookingList.get(random)));
+		Assert.assertTrue(updatedList.size() < bookingList.size());
+
+	}
+
+	/*
+	We could do more and more testing, this was just a quick example of the test you could do with Rest Assured
+	If you are interested look for Data Driven Testing, how to send concurrent requests to the APIs, Differences between Data Binding Libraries
+	How to upload these tests to a CI pipeline.
+	 */
+
+	//Continues in feature/8-Gherkin-and-Clossure
 }

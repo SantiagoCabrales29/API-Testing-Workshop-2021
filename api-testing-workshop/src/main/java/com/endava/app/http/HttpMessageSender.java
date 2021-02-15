@@ -65,4 +65,16 @@ public class HttpMessageSender {
 						put(requestURL).
 						andReturn();
 	}
+
+
+	public Response deleteRequestToEndpoint(String token, String endpoint) {
+		String requestURL = url + endpoint;
+		return
+				given().
+						contentType(ContentType.JSON).
+						cookie("token",token).log().all().
+						when().
+						delete(requestURL).
+						andReturn();
+	}
 }
