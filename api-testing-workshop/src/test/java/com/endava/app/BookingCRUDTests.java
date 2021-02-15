@@ -79,4 +79,12 @@ public class BookingCRUDTests {
 
 	//Is this an Example of serialization or deserialization?
 	//Let's continue with the serialization of the Booking dates object.
+
+
+
+	// Now let's use those classes to create objects through the API
+	@Test
+	public void createBooking() {
+
+	}
 }
