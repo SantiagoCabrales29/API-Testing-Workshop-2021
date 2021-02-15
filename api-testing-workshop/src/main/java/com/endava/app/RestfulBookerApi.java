@@ -1,5 +1,6 @@
 package com.endava.app;
 
+import com.endava.app.entities.Auth;
 import com.endava.app.entities.Booking;
 import com.endava.app.http.HttpMessageSender;
 import com.google.gson.Gson;
@@ -46,5 +47,21 @@ public class RestfulBookerApi {
 	//Now we are going to use post method that we created some time ago. Note that we only have to modify the HttpMessageSender Class
 	public Response createBooking(Booking booking) {
 		return messageSender.postRequestToEndpoint(booking,"/booking");
+	}
+
+	public String auth(Auth credentials) {
+
+		Response response = messageSender.auth(credentials,"/auth");
+		String token = response.then().extract().path("token");
+
+		System.out.println("El token es:" + token);
+
+		return token;
+	}
+
+
+	public Response updateBooking(Booking booking, String token, int index) {
+		return messageSender.putRequestToEndpoint(booking, token,"/booking/"+index);
+
 	}
 }

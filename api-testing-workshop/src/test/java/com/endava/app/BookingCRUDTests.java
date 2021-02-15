@@ -1,8 +1,8 @@
 package com.endava.app;
 
+import com.endava.app.entities.Auth;
 import com.endava.app.entities.Booking;
 import com.endava.app.helpers.DataGenerator;
-import com.endava.app.http.HttpMessageSender;
 import io.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -49,25 +49,6 @@ public class BookingCRUDTests {
 		Assert.assertEquals(201, response.getStatusCode());
 	}
 
-
-	/*
-	Something very useful when testing the APIs is what we know as Serialization and Deserialization process.
-	With those we can managed the data binding between our test suite and the Json/XML objects used by the system.
-
-	Serialization: converts Java Objects to JSON output.
-	Deserialization: converts JSON input into Java objects.
-
-	In Java we know those objects as POJOs (Plain Old Java Object)
-	But no only in java we can do this with other languages. Those objects are considered DTO (Data Transfer Object)
-
-	Can you think of some usages for this?
-
-	Let's see this in more detail in the Booking class.
-	*/
-
-	//To do the serialization we have to use an external library that help us with Data binding. We can use
-	//Jackson, Gson, among others. In this example we will use Gson. Let's add the maven dependency
-
 	@Test
 	public void getBookingById() {
 		List<Integer> listBookingIds = api.getBookingIds();
@@ -75,26 +56,18 @@ public class BookingCRUDTests {
 		System.out.println("This is the random number: " + random);
 		Booking booking = api.getBookingById(random);
 
-		Assert.assertNotNull("Booking is null",booking);
+		Assert.assertNotNull("Booking is null", booking);
 	}
 
-	//Is this an Example of serialization or deserialization?
-	//Let's continue with the serialization of the Booking dates object.
-
-
-
-	// Now let's use those classes to create objects through the API
 	@Test
 	public void createBooking() {
 		Booking booking = DataGenerator.createRandomBooking();
 		Response response = api.createBooking(booking);
 
-		Assert.assertEquals("The status code is different than 200Ok",response.statusCode(),200);
+		Assert.assertEquals("The status code is different than 200Ok", response.statusCode(), 200);
 		String name = response.then().extract().path("booking.firstname");
 		Assert.assertEquals("Names do not match", name, booking.getFirstname());
 	}
-
-	//Can you think in a way of improving this test case?
 
 	@Test
 	public void createBookingImprovedTest() {
@@ -102,14 +75,41 @@ public class BookingCRUDTests {
 		Booking booking = DataGenerator.createRandomBooking();
 		Response response = api.createBooking(booking);
 
-		Assert.assertEquals("The status code is different than 200Ok",response.statusCode(),200);
+		Assert.assertEquals("The status code is different than 200Ok", response.statusCode(), 200);
 		List<Integer> newBookingList = api.getBookingIds();
-		Assert.assertTrue(newBookingList.size()>bookingsInList.size());
+		Assert.assertTrue(newBookingList.size() > bookingsInList.size());
 
 		int id = response.then().extract().path("bookingid");
 		Booking createdBooking = api.getBookingById(id);
 		Assert.assertEquals("Names do not match", booking.getFirstname(), createdBooking.getFirstname());
 	}
 
-	//Continues in the feature/7-Adding-More-Tests
+	//Exercise Try to create a test to update a booking.
+	//Note that we have to do the auth method first and obtain a token!
+
+
+
+
+	//We can manage the auth in many ways but let's use Serialization again
+	@Test
+	public void updateBooking() {
+		String username = props.getProperty("username");
+		String password = props.getProperty("password");
+		Auth auth = new Auth(username,password);
+		String token = api.auth(auth);
+
+		List<Integer> bookingList = api.getBookingIds();
+		int random = (int) (Math.random() * (bookingList.size()) + 1);
+		System.out.println("This is the random number: " + random);
+
+		Booking booking = api.getBookingById(random);
+		booking.setFirstname("Pedro");
+		booking.setLastname("Pascal");
+
+		Response response = api.updateBooking(booking, token, bookingList.get(random));
+		response.then().log().all();
+		Assert.assertEquals(200, response.getStatusCode());
+		Assert.assertEquals("Names do not match", response.then().extract().path("firstname"), booking.getFirstname());
+		Assert.assertEquals("LastNames do not match", response.then().extract().path("lastname"), booking.getLastname());
+	}
 }
