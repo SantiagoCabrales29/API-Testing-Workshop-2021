@@ -1,5 +1,6 @@
 package com.endava.app;
 
+import com.endava.app.entities.Booking;
 import com.endava.app.http.HttpMessageSender;
 import io.restassured.response.Response;
 import org.junit.Assert;
@@ -63,4 +64,18 @@ public class BookingCRUDTests {
 	Let's see this in more detail in the Booking class.
 	*/
 
+	//To do the serialization we have to use an external library that help us with Data binding. We can use
+	//Jackson, Gson, among others. In this example we will use Gson. Let's add the maven dependency
+
+	@Test
+	public void getBookingById() {
+		List<Integer> listBookingIds = api.getBookingIds();
+		int random = (int) (Math.random() * (listBookingIds.size())) + 1;
+		System.out.println("This is the random number: " + random);
+		Booking booking = api.getBookingById(random);
+
+		Assert.assertNotNull("Booking is null",booking);
+	}
+
+	//Is this an Example of serialization or deserialization?
 }
