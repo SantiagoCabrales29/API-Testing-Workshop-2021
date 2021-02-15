@@ -95,4 +95,21 @@ public class BookingCRUDTests {
 	}
 
 	//Can you think in a way of improving this test case?
+
+	@Test
+	public void createBookingImprovedTest() {
+		List<Integer> bookingsInList = api.getBookingIds();
+		Booking booking = DataGenerator.createRandomBooking();
+		Response response = api.createBooking(booking);
+
+		Assert.assertEquals("The status code is different than 200Ok",response.statusCode(),200);
+		List<Integer> newBookingList = api.getBookingIds();
+		Assert.assertTrue(newBookingList.size()>bookingsInList.size());
+
+		int id = response.then().extract().path("bookingid");
+		Booking createdBooking = api.getBookingById(id);
+		Assert.assertEquals("Names do not match", booking.getFirstname(), createdBooking.getFirstname());
+	}
+
+	//Continues in the feature/7-Adding-More-Tests
 }
