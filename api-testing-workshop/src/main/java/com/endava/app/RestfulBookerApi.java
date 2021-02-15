@@ -42,4 +42,9 @@ public class RestfulBookerApi {
 
 		return booking;
 	}
+
+	//Now we are going to use post method that we created some time ago. Note that we only have to modify the HttpMessageSender Class
+	public Response createBooking(Booking booking) {
+		return messageSender.postRequestToEndpoint(booking,"/booking");
+	}
 }

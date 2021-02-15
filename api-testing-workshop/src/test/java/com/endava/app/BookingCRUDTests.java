@@ -1,6 +1,7 @@
 package com.endava.app;
 
 import com.endava.app.entities.Booking;
+import com.endava.app.helpers.DataGenerator;
 import com.endava.app.http.HttpMessageSender;
 import io.restassured.response.Response;
 import org.junit.Assert;
@@ -85,6 +86,13 @@ public class BookingCRUDTests {
 	// Now let's use those classes to create objects through the API
 	@Test
 	public void createBooking() {
+		Booking booking = DataGenerator.createRandomBooking();
+		Response response = api.createBooking(booking);
 
+		Assert.assertEquals("The status code is different than 200Ok",response.statusCode(),200);
+		String name = response.then().extract().path("booking.firstname");
+		Assert.assertEquals("Names do not match", name, booking.getFirstname());
 	}
+
+	//Can you think in a way of improving this test case?
 }

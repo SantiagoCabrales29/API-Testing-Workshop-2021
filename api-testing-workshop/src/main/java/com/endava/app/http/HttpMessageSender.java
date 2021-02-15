@@ -1,14 +1,12 @@
 package com.endava.app.http;
 
+import com.endava.app.entities.Booking;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-
-import java.net.URL;
 
 import static io.restassured.RestAssured.given;
 
 public class HttpMessageSender {
-	//This class will group all the methods needed to send HTTP Requests
 	private String url;
 
 	public HttpMessageSender(String url) {
@@ -17,31 +15,24 @@ public class HttpMessageSender {
 
 	public Response getRequestToEndpoint(String endpoint) {
 		String requestURL = url + endpoint;
-		Response response =
+		return
 				given().
 						contentType(ContentType.JSON).
 						when().
 						get(requestURL).
 						andReturn();
 
-		return response;
 	}
 
-
-	//This goes after showing the first test
-
-
-	public Response postRequestToEndpoint(String msg, String endpoint) {
+	public Response postRequestToEndpoint(Booking booking, String endpoint) {
 		String requestURL = url + endpoint;
-		Response response =
+		return
 				given().
 						contentType(ContentType.JSON).
-						body(msg).log().all().
+						body(booking).log().all().
 						when().
 						post(requestURL).
 						andReturn();
 
-		return response;
 	}
-	//Continues in feature/5-Introduction-to-Abstractions
 }
