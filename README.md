@@ -9,12 +9,19 @@ This workshp follows a git flow. It is very easy to follow it as you have commen
 The flow is the following:
 
 feature/1-Getting-Started
+
 feature/2-RequestSpecification
+
 feature/3-Environment-Variables
+
 feature/4-Separating-Logics
+
 feature/5-Introduction-to-Abstractions
+
 feature/6-Serialization-and-Deserialization
+
 feature/7-Adding-More-Tests
+
 feature/8-Gherkin-and-Clossure
 
 System under Test:
