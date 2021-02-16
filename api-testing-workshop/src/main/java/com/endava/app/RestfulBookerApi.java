@@ -15,7 +15,6 @@ public class RestfulBookerApi {
 	private final HttpMessageSender messageSender;
 	private JsonParser parser = new JsonParser();
 
-
 	public RestfulBookerApi(String url) {
 		this.url = url;
 		this.messageSender = new HttpMessageSender(url);
@@ -23,50 +22,42 @@ public class RestfulBookerApi {
 
 	public List<Integer> getBookingIds() {
 		Response response = messageSender.getRequestToEndpoint("/booking");
-
 		List<Integer> listIds = response.then().extract().path("bookingid");
-
 		return listIds;
 	}
 
-	public Response doPing(){
+	public Response doPing() {
 		Response response = messageSender.getRequestToEndpoint("/ping");
-		return  response;
+		return response;
 	}
 
 	public Booking getBookingById(int id) {
-		Response response = messageSender.getRequestToEndpoint("/booking/"+id);
+		Response response = messageSender.getRequestToEndpoint("/booking/" + id);
 		JsonElement jsonResponse = parser.parse(response.body().asString());
-
 		Booking booking = new Gson().fromJson(jsonResponse, Booking.class);
-		System.out.println("This is the name of the booking: " + booking.getFirstname() + " " + booking.getLastname());
-
+		//System.out.println("This is the name of the booking: " + booking.getFirstname() + " " + booking.getLastname());
 		return booking;
 	}
 
-	//Now we are going to use post method that we created some time ago. Note that we only have to modify the HttpMessageSender Class
 	public Response createBooking(Booking booking) {
-		return messageSender.postRequestToEndpoint(booking,"/booking");
+		return messageSender.postRequestToEndpoint(booking, "/booking");
 	}
 
 	public String auth(Auth credentials) {
-
-		Response response = messageSender.auth(credentials,"/auth");
+		Response response = messageSender.auth(credentials, "/auth");
 		String token = response.then().extract().path("token");
-
-		System.out.println("El token es:" + token);
-
+		//System.out.println("El token es:" + token);
 		return token;
 	}
 
 
 	public Response updateBooking(Booking booking, String token, int index) {
-		return messageSender.putRequestToEndpoint(booking, token,"/booking/"+index);
+		return messageSender.putRequestToEndpoint(booking, token, "/booking/" + index);
 
 	}
 
 	public Response deleteBooking(String token, int index) {
-		return messageSender.deleteRequestToEndpoint(token, "/booking/"+index);
+		return messageSender.deleteRequestToEndpoint(token, "/booking/" + index);
 
 	}
 }

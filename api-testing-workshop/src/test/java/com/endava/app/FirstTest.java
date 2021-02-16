@@ -9,13 +9,6 @@ import org.junit.Test;
 
 public class FirstTest
 {
-    /*
-     We need to use an interaction tool library. Example Rest Assured, Selenium, etc.
-     An interaction library allows us to interact with the system that we want to test, in this case an API.
-     We will use Rest Assured but you can use any library that allows you to send HTTP Messages. Let's add it.
-     */
-
-    //Now with Rest Assured we can do our first api call!
 	@Test
 	public void firstApiTest(){
 
@@ -27,13 +20,7 @@ public class FirstTest
 				assertThat().
 				statusCode(200);
 	}
-	/*
-	In this case we are using the official joke api.
-	The test passes but is it making the things that we want?
-	How can we see anything rest assured is doing?
-	 */
 
-	//Note that the name of the methods must be meaningful, don't follow my example!
 	@Test
 	public void secondApiTest(){
 
@@ -46,8 +33,6 @@ public class FirstTest
 				statusCode(200);
 	}
 
-	//Exercise do a check to the swapi endpoint https://swapi.dev/api/people/1
-
 	@Test
 	public void StarWarsAPITest(){
 
@@ -59,11 +44,4 @@ public class FirstTest
 				assertThat().
 				statusCode(200);
 	}
-
-
-
-
-
-
-
 }

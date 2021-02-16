@@ -5,8 +5,6 @@ import com.endava.app.entities.Booking;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
-import java.net.URL;
-
 import static io.restassured.RestAssured.given;
 
 public class HttpMessageSender {
@@ -24,7 +22,6 @@ public class HttpMessageSender {
 						when().
 						get(requestURL).
 						andReturn();
-
 	}
 
 	public Response postRequestToEndpoint(Booking booking, String endpoint) {
@@ -36,14 +33,13 @@ public class HttpMessageSender {
 						when().
 						post(requestURL).
 						andReturn();
-
 	}
 
 
-	public Response auth(Auth credentials, String endpoint){
+	public Response auth(Auth credentials, String endpoint) {
 		String requestURL = url + endpoint;
-				return
-						given().
+		return
+				given().
 						contentType(ContentType.JSON).
 						body(credentials).
 						log().all().
@@ -52,27 +48,24 @@ public class HttpMessageSender {
 						andReturn();
 	}
 
-
-	public Response putRequestToEndpoint(Booking booking, String token, String endpoint){
+	public Response putRequestToEndpoint(Booking booking, String token, String endpoint) {
 		String requestURL = url + endpoint;
-
-			return
+		return
 				given().
 						body(booking).
 						contentType(ContentType.JSON).
-						cookie("token",token).log().all().
+						cookie("token", token).log().all().
 						when().
 						put(requestURL).
 						andReturn();
 	}
-
 
 	public Response deleteRequestToEndpoint(String token, String endpoint) {
 		String requestURL = url + endpoint;
 		return
 				given().
 						contentType(ContentType.JSON).
-						cookie("token",token).log().all().
+						cookie("token", token).log().all().
 						when().
 						delete(requestURL).
 						andReturn();

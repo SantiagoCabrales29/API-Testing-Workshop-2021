@@ -13,22 +13,14 @@ import java.util.List;
 
 public class BookingSteps {
 
-	/*
-	Cucumber is a Specification Driven Tool.
-	It allow us to write executable test cases that are human readable and easy to understand for the non technical people
-	of our team. It allow us to execute some steps and even do keyword driven testing and data driven testing.
-	 */
-
 	private RestfulBookerApi api = new RestfulBookerApi("https://restful-booker.herokuapp.com");
 	private int id;
 	private List<Integer> list;
 	@Given("A recently created Booking")
     public void aRecentlyCreatedBooking() {
-
 		Booking booking = DataGenerator.createRandomBooking();
 		Response response = api.createBooking(booking);
 		id = response.then().extract().path("bookingid");
-
 		Assert.assertEquals("The status code is different than 200Ok", response.statusCode(), 200);
     }
 
@@ -39,14 +31,10 @@ public class BookingSteps {
 
 	@Then("The booking is added to the list")
 	public void theBookingIsAddedToTheList() {
-
 		Assert.assertTrue(searchItemToUpdate(list,id));
 	}
 
-
-
 	public boolean searchItemToUpdate(List<Integer> listIds, int idToSearch){
-
 		for (Integer id:listIds) {
 			if (id==idToSearch){
 				return true;

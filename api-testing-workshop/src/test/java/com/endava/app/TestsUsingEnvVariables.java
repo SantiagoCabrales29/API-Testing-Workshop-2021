@@ -15,7 +15,6 @@ import static io.restassured.RestAssured.given;
 
 public class TestsUsingEnvVariables {
 
-	//How to use an test environment class. This allows me to have sensible information in one place. If I need to modify it then I change it in the class.
 	@Test
 	public void usingEnvVariableTest(){
 		given().
@@ -26,9 +25,6 @@ public class TestsUsingEnvVariables {
 				assertThat().
 				statusCode(200);
 	}
-
-
-	//How to use an application.properties file
 
 	@Test
 	public void usingPropertiesFileTest(){
@@ -47,13 +43,6 @@ public class TestsUsingEnvVariables {
 				assertThat().
 				statusCode(200);
 	}
-
-
-	/*
-	Just to test the status code isn't enough!!!!! Remember that API test is a big phase in our test automation journey
-	We can make any meaningful test that you can think of. We can assert fields in the response, assert response times
-	response details, among other tests.
-	 */
 
 	@Test
 	public void IdListOnlyHasPositiveIds(){
@@ -79,11 +68,6 @@ public class TestsUsingEnvVariables {
 		Assert.assertTrue("An id is negative",areItemsPositive);
 	}
 
-	/*
-	Exercise: Lets use the /booking/1 endpoint to assert that the name fisrtname field is different than your name.
-	 */
-
-
 	@Test
 	public void TestFirstNameValueOfFirstBooking(){
 
@@ -93,12 +77,9 @@ public class TestsUsingEnvVariables {
 		} catch (IOException var2) {
 			System.out.println("Hay un error leyendo el archivo de properties");
 		}
-		boolean areItemsPositive=true;
 		Response response = given().contentType(ContentType.JSON).when().get(props.getProperty("url")+"/booking/1").andReturn();
 		String name =response.then().extract().path("firstname");
-		System.out.println("The name is: "+ name);
-		Assert.assertTrue("We have an incorrect name",name!="Santiago");
+		Assert.assertNotSame("We have an incorrect name", "Santiago", name);
 
 	}
-// Continues in feature/4-Separating-Logics
 }

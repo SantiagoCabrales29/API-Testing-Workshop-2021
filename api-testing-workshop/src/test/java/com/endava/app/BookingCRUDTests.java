@@ -88,7 +88,7 @@ public class BookingCRUDTests {
 	public void updateBooking() {
 		String username = props.getProperty("username");
 		String password = props.getProperty("password");
-		Auth auth = new Auth(username,password);
+		Auth auth = new Auth(username, password);
 		String token = api.auth(auth);
 
 		List<Integer> bookingList = api.getBookingIds();
@@ -110,17 +110,17 @@ public class BookingCRUDTests {
 	public void deleteBooking() {
 		String username = props.getProperty("username");
 		String password = props.getProperty("password");
-		Auth auth = new Auth(username,password);
+		Auth auth = new Auth(username, password);
 		String token = api.auth(auth);
 
 		List<Integer> bookingList = api.getBookingIds();
 
-		int random = (int) (Math.random() * (bookingList.size())+1);
+		int random = (int) (Math.random() * (bookingList.size()) + 1);
 		System.out.println("This is the random number: " + random);
 
 		Response response = api.deleteBooking(token, bookingList.get(random));
 
-		Assert.assertEquals("",response.statusCode(), 201);
+		Assert.assertEquals("", response.statusCode(), 201);
 
 		List<Integer> updatedList = api.getBookingIds();
 
@@ -128,5 +128,4 @@ public class BookingCRUDTests {
 		Assert.assertTrue(updatedList.size() < bookingList.size());
 
 	}
-	//We have to add the cucumber dependency
 }
