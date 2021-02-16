@@ -28,7 +28,7 @@ public class FirstTest
 				contentType(ContentType.JSON).
 				when().
 				get("https://official-joke-api.appspot.com/random_joke").
-				then().log().all().
+				then().
 				assertThat().
 				statusCode(200);
 	}
@@ -40,7 +40,7 @@ public class FirstTest
 				contentType(ContentType.JSON).
 				when().
 				get("https://swapi.dev/api/people/1").
-				then().log().body().
+				then().
 				assertThat().
 				statusCode(200);
 	}

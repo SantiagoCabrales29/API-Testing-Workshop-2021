@@ -6,7 +6,8 @@ It was created for the internship process but you can use it to learn the basics
 
 This workshp follows a git flow. It is very easy to follow it as you have comments in the code and the name of the features follow the format feature/Number+Name of feature.
 
-The flow is the following
+The flow is the following:
+
 feature/1-Getting-Started
 feature/2-RequestSpecification
 feature/3-Environment-Variables
@@ -22,5 +23,6 @@ This project test the restful booker api but uses other little apis to show some
 Technologies:
 This project uses JUnit, RestAssured, Gson, Cucumber
 
+This workshop also includes a power point presentation.
 
 If any question, comment or idea please contact me through my email sacamo96@gmail.com

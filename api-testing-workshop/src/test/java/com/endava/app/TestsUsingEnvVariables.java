@@ -34,7 +34,6 @@ public class TestsUsingEnvVariables {
 		} catch (IOException var2) {
 			System.out.println("Hay un error leyendo el archivo de properties");
 		}
-
 		given().
 				contentType(ContentType.JSON).
 				when()
@@ -46,7 +45,6 @@ public class TestsUsingEnvVariables {
 
 	@Test
 	public void IdListOnlyHasPositiveIds(){
-
 		Properties props = new Properties();
 		try {
 			props.load(new FileInputStream("application.properties"));
@@ -56,9 +54,7 @@ public class TestsUsingEnvVariables {
 		boolean areItemsPositive=true;
 		Response response = given().contentType(ContentType.JSON).when().get(props.getProperty("url")+"/booking").andReturn();
 		List<Integer> listIds=response.then().extract().path("bookingid");
-
 		Assert.assertTrue("The list of ids is empty",listIds.size()>0);
-
 		for(Integer bookingId: listIds){
 			if(bookingId <=0){
 				areItemsPositive=false;
@@ -70,7 +66,6 @@ public class TestsUsingEnvVariables {
 
 	@Test
 	public void TestFirstNameValueOfFirstBooking(){
-
 		Properties props = new Properties();
 		try {
 			props.load(new FileInputStream("application.properties"));
@@ -80,6 +75,5 @@ public class TestsUsingEnvVariables {
 		Response response = given().contentType(ContentType.JSON).when().get(props.getProperty("url")+"/booking/1").andReturn();
 		String name =response.then().extract().path("firstname");
 		Assert.assertNotSame("We have an incorrect name", "Santiago", name);
-
 	}
 }

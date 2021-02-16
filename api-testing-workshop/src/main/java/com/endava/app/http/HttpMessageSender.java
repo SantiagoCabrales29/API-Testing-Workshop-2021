@@ -29,7 +29,7 @@ public class HttpMessageSender {
 		return
 				given().
 						contentType(ContentType.JSON).
-						body(booking).log().all().
+						body(booking).
 						when().
 						post(requestURL).
 						andReturn();
@@ -42,7 +42,6 @@ public class HttpMessageSender {
 				given().
 						contentType(ContentType.JSON).
 						body(credentials).
-						log().all().
 						when().
 						post(requestURL).
 						andReturn();
@@ -54,7 +53,7 @@ public class HttpMessageSender {
 				given().
 						body(booking).
 						contentType(ContentType.JSON).
-						cookie("token", token).log().all().
+						cookie("token", token).
 						when().
 						put(requestURL).
 						andReturn();
@@ -65,7 +64,7 @@ public class HttpMessageSender {
 		return
 				given().
 						contentType(ContentType.JSON).
-						cookie("token", token).log().all().
+						cookie("token", token).
 						when().
 						delete(requestURL).
 						andReturn();

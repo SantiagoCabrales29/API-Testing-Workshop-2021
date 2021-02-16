@@ -37,7 +37,7 @@ public class RestfulbookerFirstTests {
 				contentType(ContentType.JSON).
 				when().
 				get("https://restful-booker.herokuapp.com/booking").
-				then().log().body().
+				then().
 				assertThat().
 				statusCode(200);
 	}

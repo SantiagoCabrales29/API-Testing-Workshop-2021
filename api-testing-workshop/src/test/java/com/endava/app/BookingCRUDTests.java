@@ -53,9 +53,8 @@ public class BookingCRUDTests {
 	public void getBookingById() {
 		List<Integer> listBookingIds = api.getBookingIds();
 		int random = (int) (Math.random() * (listBookingIds.size())) + 1;
-		System.out.println("This is the random number: " + random);
+		//System.out.println("This is the random number: " + random);
 		Booking booking = api.getBookingById(random);
-
 		Assert.assertNotNull("Booking is null", booking);
 	}
 
@@ -63,7 +62,6 @@ public class BookingCRUDTests {
 	public void createBooking() {
 		Booking booking = DataGenerator.createRandomBooking();
 		Response response = api.createBooking(booking);
-
 		Assert.assertEquals("The status code is different than 200Ok", response.statusCode(), 200);
 		String name = response.then().extract().path("booking.firstname");
 		Assert.assertEquals("Names do not match", name, booking.getFirstname());
@@ -74,11 +72,9 @@ public class BookingCRUDTests {
 		List<Integer> bookingsInList = api.getBookingIds();
 		Booking booking = DataGenerator.createRandomBooking();
 		Response response = api.createBooking(booking);
-
 		Assert.assertEquals("The status code is different than 200Ok", response.statusCode(), 200);
 		List<Integer> newBookingList = api.getBookingIds();
 		Assert.assertTrue(newBookingList.size() > bookingsInList.size());
-
 		int id = response.then().extract().path("bookingid");
 		Booking createdBooking = api.getBookingById(id);
 		Assert.assertEquals("Names do not match", booking.getFirstname(), createdBooking.getFirstname());
@@ -90,17 +86,14 @@ public class BookingCRUDTests {
 		String password = props.getProperty("password");
 		Auth auth = new Auth(username, password);
 		String token = api.auth(auth);
-
 		List<Integer> bookingList = api.getBookingIds();
 		int random = (int) (Math.random() * (bookingList.size()) + 1);
-		System.out.println("This is the random number: " + random);
-
+		//System.out.println("This is the random number: " + random);
 		Booking booking = api.getBookingById(random);
 		booking.setFirstname("Pedro");
 		booking.setLastname("Pascal");
-
 		Response response = api.updateBooking(booking, token, bookingList.get(random));
-		response.then().log().all();
+		//response.then().log().all();
 		Assert.assertEquals(200, response.getStatusCode());
 		Assert.assertEquals("Names do not match", response.then().extract().path("firstname"), booking.getFirstname());
 		Assert.assertEquals("LastNames do not match", response.then().extract().path("lastname"), booking.getLastname());
@@ -112,20 +105,13 @@ public class BookingCRUDTests {
 		String password = props.getProperty("password");
 		Auth auth = new Auth(username, password);
 		String token = api.auth(auth);
-
 		List<Integer> bookingList = api.getBookingIds();
-
 		int random = (int) (Math.random() * (bookingList.size()) + 1);
-		System.out.println("This is the random number: " + random);
-
+		//System.out.println("This is the random number: " + random);
 		Response response = api.deleteBooking(token, bookingList.get(random));
-
 		Assert.assertEquals("", response.statusCode(), 201);
-
 		List<Integer> updatedList = api.getBookingIds();
-
 		Assert.assertFalse("", updatedList.contains(bookingList.get(random)));
 		Assert.assertTrue(updatedList.size() < bookingList.size());
-
 	}
 }
