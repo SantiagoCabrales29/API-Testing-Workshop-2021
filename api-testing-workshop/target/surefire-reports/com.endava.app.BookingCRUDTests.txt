@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: com.endava.app.FirstTest
+Test set: com.endava.app.BookingCRUDTests
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.688 s - in com.endava.app.FirstTest
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.049 s - in com.endava.app.BookingCRUDTests

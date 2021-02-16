@@ -84,13 +84,6 @@ public class BookingCRUDTests {
 		Assert.assertEquals("Names do not match", booking.getFirstname(), createdBooking.getFirstname());
 	}
 
-	//Exercise Try to create a test to update a booking.
-	//Note that we have to do the auth method first and obtain a token!
-
-
-
-
-	//We can manage the auth in many ways but let's use Serialization again
 	@Test
 	public void updateBooking() {
 		String username = props.getProperty("username");
@@ -112,11 +105,6 @@ public class BookingCRUDTests {
 		Assert.assertEquals("Names do not match", response.then().extract().path("firstname"), booking.getFirstname());
 		Assert.assertEquals("LastNames do not match", response.then().extract().path("lastname"), booking.getLastname());
 	}
-
-
-	//Exercice try to test delete booking
-
-
 
 	@Test
 	public void deleteBooking() {
@@ -140,12 +128,5 @@ public class BookingCRUDTests {
 		Assert.assertTrue(updatedList.size() < bookingList.size());
 
 	}
-
-	/*
-	We could do more and more testing, this was just a quick example of the test you could do with Rest Assured
-	If you are interested look for Data Driven Testing, how to send concurrent requests to the APIs, Differences between Data Binding Libraries
-	How to upload these tests to a CI pipeline.
-	 */
-
-	//Continues in feature/8-Gherkin-and-Clossure
+	//We have to add the cucumber dependency
 }
