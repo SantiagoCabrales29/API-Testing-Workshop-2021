@@ -1,7 +1,0 @@
-com/endava/app/helpers/TestEnv.class
-com/endava/app/BookingCRUDTests.class
-com/endava/app/RestfulbookerFirstTests.class
-com/endava/app/helpers/DataGenerator.class
-com/endava/app/stepdefs/BookingSteps.class
-com/endava/app/FirstTest.class
-com/endava/app/TestsUsingEnvVariables.class

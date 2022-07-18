@@ -1,5 +1,0 @@
-com/endava/app/RestfulBookerApi.class
-com/endava/app/entities/Auth.class
-com/endava/app/entities/Booking.class
-com/endava/app/http/HttpMessageSender.class
-com/endava/app/entities/BookingDates.class
